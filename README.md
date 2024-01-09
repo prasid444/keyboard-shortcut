@@ -1,30 +1,64 @@
-# React + TypeScript + Vite
+# Keyboard Shortcut
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This example explains how I had built keyboard shortcut feature without using any external library.
 
-Currently, two official plugins are available:
+## Running Locally
+1. First clone the repo
+2. Run yarn command to download node_modules with `yarn`
+3. Run `yarn dev` to run in dev mode
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup
+### 1. You need to initialize `MainListener` in your root file.
+Make sure this is only executed ones. I will update later for singleton effect.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+#### Code Example
+```javascript
+import { MainListener } from './utils/KeyboardShortcut'
+function App() {
+...
+  useEffect(()=>{
+    //Initialize the listener
+    new MainListener().initialize()
+  },[])
+  ...
+  return <>
+  ...your project here
+  </>
 }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### 2. Import `KeyboardWrapper` and use it in the component where you want your shortcut to execute with required props
+
+#### Code Example
+```javascript
+import { KeyboardWrapper } from './utils/KeyboardShortcut'
+...
+
+return <div>
+  ...
+  <KeyboardWrapper 
+        onDown={()=>{
+          console.log("TriggerOnDown a")
+        }}
+        label="a"
+        combination={'Alt+a'}
+    >
+  ...
+  </div>
+```
+
+# Note
+
+Make sure you are not running this in strict mode, else the listener might be initialized twice.
+
+Change From
+```javascript
+<React.StrictMode>
+    <App />
+</React.StrictMode>,
+```
+
+To
+```javascript
+<App />
+```
