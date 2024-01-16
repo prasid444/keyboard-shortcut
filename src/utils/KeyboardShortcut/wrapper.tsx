@@ -32,13 +32,14 @@ const KeyboardWrapper = ({
   customIndicator = _customChildNode,
 }: KeyboardWrapperProps) => {
   const [holded, setHolded] = useState(false);
+  const app = getApp();
 
   let lastKeyUpAt = new Date();
 
   let keyUpListenerKey: number | undefined,
     keyDownListenerKey: number | undefined;
 
-  let keyPressedStack: string[] = [];
+//   let keyPressedStack: string[] = [];
   const keyCombinationStack: string[] = combination
     .toLocaleUpperCase()
     .split("+");
@@ -47,18 +48,13 @@ const KeyboardWrapper = ({
     //reset hold status and lastKeyUpAt to begin listening, and empty the stack
     setHolded(false);
     lastKeyUpAt = new Date();
-    keyPressedStack = [];
+    app.keyPressedStack?.reset();
+    // keyPressedStack = [];
     //call onDown function
     onDown();
   };
 
-  const handleKeyUp = (e: KeyboardEvent) => {
-    const keyString = getActualKey(e.code);
-    if (keyString) {
-      //clear our stack for that keyString value
-      //here filter is used instead of pop because for some keys, if holded, it will appear multiple times in the stack, so when key is lifted all items should be clear out
-      keyPressedStack = keyPressedStack.filter((a) => a != keyString);
-    }
+  const handleKeyUp = () => {
     lastKeyUpAt = new Date();
     setHolded(false);
   };
@@ -68,8 +64,7 @@ const KeyboardWrapper = ({
     const keyString = getActualKey(e.code);
     if (keyString) {
       //captured alphabets or digit here
-      keyPressedStack.push(keyString);
-      if (areArraysSame(keyPressedStack, keyCombinationStack)) {
+      if (areArraysSame(app.keyPressedStack?.get()??[], keyCombinationStack)) {
         onKeyDown();
       }
     }
@@ -88,7 +83,7 @@ const KeyboardWrapper = ({
   useEffect(() => {
     //Things to do when this component is mounted
     //get the listener Object and subscibe for keyup and key down listener, assign the subscription ids to keyUpListenerKey and keyDownListenerKey
-    const app = getApp();
+   
     // keyPressedStack=[];
     keyDownListenerKey = app.keyboardDownListener?.subscribe(handleKeyDown);
     keyUpListenerKey = app.keyboardUpListener?.subscribe(handleKeyUp);
@@ -100,7 +95,6 @@ const KeyboardWrapper = ({
     };
   }, []);
 
-  console.log("keyPressedStack", keyPressedStack);
   return (
     <div className="keyboard-shortcut-wrapper">
       {children}
