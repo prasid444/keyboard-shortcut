@@ -9,7 +9,16 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "husky": {
+    "hooks": {
+    "applypatch-msg": "echo \"[Husky] applypatch-msg\"",
+    "pre-applypatch": "echo \"[Husky] pre-applypatch\"",
+    "post-applypatch": "echo \"[Husky] post-applypatch\"",
+    "pre-commit": "echo \"[Husky] pre-commit\""
+    }
+  },
   "dependencies": {
+    "husky": "^8.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
