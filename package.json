@@ -12,7 +12,8 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*": "prettier"
+    "*.{ts,tsx}": "yarn check-types",
+    "*.{ts,css,tsx}": "prettier --write"
   },
   "dependencies": {
     "husky": "^8.0.3",
