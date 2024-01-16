@@ -26,9 +26,9 @@ const keyboardDownPubSub: SubPub = Object.seal({
       }
     }
   },
-  unsubscribe: function (this: SubPub, subscriberKey: number|undefined) {
-    if(typeof subscriberKey==="number")
-    delete this.subscribers[subscriberKey];
+  unsubscribe: function (this: SubPub, subscriberKey: number | undefined) {
+    if (typeof subscriberKey === "number")
+      delete this.subscribers[subscriberKey];
   },
 });
 
@@ -49,14 +49,14 @@ const keyboardUpPubSub: SubPub = Object.seal({
       }
     }
   },
-  unsubscribe: function (this: SubPub, subscriberKey: number|undefined) {
-    if(typeof subscriberKey==="number")
-    delete this.subscribers[subscriberKey];
+  unsubscribe: function (this: SubPub, subscriberKey: number | undefined) {
+    if (typeof subscriberKey === "number")
+      delete this.subscribers[subscriberKey];
   },
 });
 let app: {
-    keyboardDownListener?: SubPub;
-    keyboardUpListener?: SubPub;
+  keyboardDownListener?: SubPub;
+  keyboardUpListener?: SubPub;
 } = {};
 app.keyboardDownListener = Object.create(keyboardDownPubSub);
 app.keyboardUpListener = Object.create(keyboardUpPubSub);

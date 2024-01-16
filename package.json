@@ -6,16 +6,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
     "preview": "vite preview"
   },
   "husky": {
     "hooks": {
-    "applypatch-msg": "echo \"[Husky] applypatch-msg\"",
-    "pre-applypatch": "echo \"[Husky] pre-applypatch\"",
-    "post-applypatch": "echo \"[Husky] post-applypatch\"",
-    "pre-commit": "echo \"[Husky] pre-commit\""
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*": "prettier --write"
   },
   "dependencies": {
     "husky": "^8.0.3",
@@ -31,6 +32,7 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "prettier": "^3.2.2",
     "sass": "^1.69.7",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
