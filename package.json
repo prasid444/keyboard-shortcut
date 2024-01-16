@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "prettier --check .",
     "format": "prettier --write .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "husky":"husky install"
   },
   "husky": {
     "hooks": {
