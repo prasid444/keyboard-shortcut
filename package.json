@@ -9,15 +9,10 @@
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "husky":"husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*": "prettier"
   },
   "dependencies": {
     "husky": "^8.0.3",
@@ -33,6 +28,7 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "lint-staged": "^15.2.0",
     "prettier": "^3.2.2",
     "sass": "^1.69.7",
     "typescript": "^5.2.2",
