@@ -46,9 +46,7 @@ const KeyboardWrapper = ({
     //reset hold status and lastKeyUpAt to begin listening, and empty the stack
     setHolded(false);
     lastKeyUpAt = new Date();
-    console.log("keyPressedStackOld", keyPressedStack);
     keyPressedStack = [];
-    console.log("keyPressedStackNew", keyPressedStack);
     //call onDown function
     onDown();
   };
