@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { getApp } from "./listener";
-import { areArraysSame, getActualKey } from "./helper";
-import "./wrapper.scss";
+import React, { useEffect, useState } from 'react';
 
-const KEY_TO_LISTEN = "Alt";
-const HOLD_DURATION = 2000; //in ms
+import './wrapper.scss';
+
+import { areArraysSame, getActualKey } from './helper';
+import { getApp } from './listener';
+
+const KEY_TO_LISTEN = 'Alt';
+const HOLD_DURATION = 300; // in ms
 
 const _customChildNode = (l: string) => {
   return (
@@ -14,7 +16,6 @@ const _customChildNode = (l: string) => {
     </>
   );
 };
-
 
 type KeyboardWrapperProps = {
   children: React.ReactNode;
@@ -36,21 +37,19 @@ const KeyboardWrapper = ({
 
   let lastKeyUpAt = new Date();
 
-  let keyUpListenerKey: number | undefined,
-    keyDownListenerKey: number | undefined;
+  let keyUpListenerKey: number | undefined;
+  let keyDownListenerKey: number | undefined;
 
-//   let keyPressedStack: string[] = [];
-  const keyCombinationStack: string[] = combination
-    .toLocaleUpperCase()
-    .split("+");
+  //   let keyPressedStack: string[] = [];
+  const keyCombinationStack: string[] = combination.toLocaleUpperCase().split('+');
 
   const onKeyDown = () => {
-    //reset hold status and lastKeyUpAt to begin listening, and empty the stack
+    // reset hold status and lastKeyUpAt to begin listening, and empty the stack
     setHolded(false);
     lastKeyUpAt = new Date();
     app.keyPressedStack?.reset();
     // keyPressedStack = [];
-    //call onDown function
+    // call onDown function
     onDown();
   };
 
@@ -63,8 +62,8 @@ const KeyboardWrapper = ({
     const keyDownAt = new Date();
     const keyString = getActualKey(e.code);
     if (keyString) {
-      //captured alphabets or digit here
-      if (areArraysSame(app.keyPressedStack?.get()??[], keyCombinationStack)) {
+      // captured alphabets or digit here
+      if (areArraysSame(app.keyPressedStack?.get() ?? [], keyCombinationStack)) {
         onKeyDown();
       }
     }
@@ -81,15 +80,15 @@ const KeyboardWrapper = ({
   };
 
   useEffect(() => {
-    //Things to do when this component is mounted
-    //get the listener Object and subscibe for keyup and key down listener, assign the subscription ids to keyUpListenerKey and keyDownListenerKey
-   
+    // Things to do when this component is mounted
+    // get the listener Object and subscibe for keyup and key down listener, assign the subscription ids to keyUpListenerKey and keyDownListenerKey
+
     // keyPressedStack=[];
     keyDownListenerKey = app.keyboardDownListener?.subscribe(handleKeyDown);
     keyUpListenerKey = app.keyboardUpListener?.subscribe(handleKeyUp);
     return () => {
-      //Things to do when this component is removed (Cleanup function)
-      //ubsubscribe keyup and key down listener for keys:keyDownListenerKey and keyUpListenerKey
+      // Things to do when this component is removed (Cleanup function)
+      // ubsubscribe keyup and key down listener for keys:keyDownListenerKey and keyUpListenerKey
       app.keyboardDownListener?.unsubscribe(keyDownListenerKey);
       app.keyboardUpListener?.unsubscribe(keyUpListenerKey);
     };

@@ -1,4 +1,4 @@
-import { MainListener } from "./listener";
-import KeyboardWrapper from "./wrapper";
+import { MainListener } from './listener';
+import KeyboardWrapper from './wrapper';
 
 export { KeyboardWrapper, MainListener };

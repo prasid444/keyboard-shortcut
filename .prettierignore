@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+.eslintcache
+pnpm-lock.yaml
+docker-compose.dev.yml
+docker-compose.prod.yml
+.drone.yml
