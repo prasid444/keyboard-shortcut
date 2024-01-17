@@ -4,7 +4,6 @@ This example explains how I had built keyboard shortcut feature without using an
 
 ![](./example/assets/playback.gif)
 
-
 ## Running Locally
 
 1. First clone the repo
