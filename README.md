@@ -14,6 +14,7 @@ This example explains how I had built keyboard shortcut feature without using an
 ![](./example/assets/playback.gif)
 
 ##### Code Example
+
 Import `KeyboardWrapper` and use it in the component where you want your shortcut to execute with required props
 
 ```javascript
@@ -32,7 +33,6 @@ return <div>
   ...
   </div>
 ```
-
 
 ## 2. Object Difference
 
