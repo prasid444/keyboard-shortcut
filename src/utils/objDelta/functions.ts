@@ -1,4 +1,10 @@
-const convertBasicToNested = (flatObject: Record<string, any> = {}) => {
+/**
+ *
+ *
+ * @param {Record<string, any>} [flatObject={}]
+ * @return {*}  {Record<any, any>}
+ */
+const convertBasicToNested = (flatObject: Record<string, any> = {}): Record<any, any> => {
   const nestedObject: Record<any, any> = {};
   Object.keys(flatObject).forEach((key) => {
     const value = flatObject[key];
@@ -46,7 +52,13 @@ const convertBasicToNested = (flatObject: Record<string, any> = {}) => {
   return nestedObject;
 };
 
-const convertNestedToBasic = (nestedObject: Record<any, any> = {}) => {
+/**
+ *
+ *
+ * @param {Record<any, any>} [nestedObject={}]
+ * @return {*}  {Record<string, any>}
+ */
+const convertNestedToBasic = (nestedObject: Record<any, any> = {}): Record<string, any> => {
   const basicObject: Record<string, any> = {};
 
   const flattenObject = (obj: Record<any, any>, prefix = '') => {
@@ -72,10 +84,17 @@ const convertNestedToBasic = (nestedObject: Record<any, any> = {}) => {
   return basicObject;
 };
 
+/**
+ *
+ *
+ * @param {Record<any, any>} [oldBaseObject={}]
+ * @param {Record<any, any>} [newBaseObject={}]
+ * @return {*}  {Record<string, any>}
+ */
 const calculateDeltaBaseObject = (
   oldBaseObject: Record<any, any> = {},
   newBaseObject: Record<any, any> = {}
-) => {
+): Record<string, any> => {
   const deltaObject: Record<string, any> = {};
   Object.keys(newBaseObject).forEach((key) => {
     if (newBaseObject[key] != oldBaseObject[key]) {

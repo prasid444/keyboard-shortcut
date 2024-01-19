@@ -21,6 +21,12 @@ interface KeyPressedStack {
   reset: () => void;
 }
 
+type KeyboardWrapperApp = {
+  keyboardDownListener?: SubPub;
+  keyboardUpListener?: SubPub;
+  keyPressedStack?: KeyPressedStack;
+};
+
 const keyboardDownPubSub: SubPub = Object.seal({
   subscriberKey: 0,
   subscribers: {},
@@ -79,39 +85,75 @@ const keyPressedStack: KeyPressedStack = Object.seal({
     this.stack = [];
   },
 });
-let app: {
-  keyboardDownListener?: SubPub;
-  keyboardUpListener?: SubPub;
-  keyPressedStack?: KeyPressedStack;
-} = {};
-app.keyboardDownListener = Object.create(keyboardDownPubSub);
-app.keyboardUpListener = Object.create(keyboardUpPubSub);
-app.keyPressedStack = Object.create(keyPressedStack);
 
-function getApp() {
-  return app;
-}
-
+/**
+ *
+ * Represents a singleton MainListener class with keyboard event listeners for Keyboard Shortcut.
+ *
+ * @class MainListener
+ */
 class MainListener {
-  constructor() {}
+  private static instance: MainListener;
+  private app: KeyboardWrapperApp = {
+    keyboardDownListener: Object.create(keyboardDownPubSub),
+    keyboardUpListener: Object.create(keyboardUpPubSub),
+    keyPressedStack: Object.create(keyPressedStack),
+  };
 
-  initialize = () => {
-    app = getApp();
+  /**
+   * Private constructor to enforce singleton pattern.
+   * @private
+   * @memberof MainListener
+   */
+  private constructor() {
+    // Initialize the instance, if needed
+    this.initialize();
+  }
+
+  /**
+   * Gets the singleton instance of MainListener.
+   * @returns {MainListener} The singleton instance of MainListener.
+   * @memberof MainListener
+   */
+  public static getInstance(): MainListener {
+    if (!MainListener.instance) {
+      MainListener.instance = new MainListener();
+    }
+    return MainListener.instance;
+  }
+  /**
+   * Initializes the MainListener by setting up keyboard event listeners.
+   * @private
+   * @memberof MainListener
+   */
+  private initialize = () => {
     window.addEventListener('keydown', (e) => {
       const keyString = getActualKey(e.code);
       if (keyString) {
-        app.keyPressedStack?.push(keyString);
+        this.app.keyPressedStack?.push(keyString);
       }
-      app.keyboardDownListener?.publish(e);
+      this.app.keyboardDownListener?.publish(e);
     });
+
     window.addEventListener('keyup', (e) => {
       const keyString = getActualKey(e.code);
       if (keyString) {
-        app.keyPressedStack?.remove(keyString);
+        this.app.keyPressedStack?.remove(keyString);
       }
-      app.keyboardUpListener?.publish(e);
+      this.app.keyboardUpListener?.publish(e);
     });
+  };
+
+  /**
+   * Gets the 'app' instance.
+   * @returns {KeyboardWrapperApp}
+   * @memberof MainListener
+   * @function
+   * @public
+   */
+  getApp = (): KeyboardWrapperApp => {
+    return this.app;
   };
 }
 
-export { getApp, MainListener };
+export { MainListener };

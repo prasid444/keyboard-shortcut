@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './wrapper.scss';
 
 import { areArraysSame, getActualKey } from './helper';
-import { getApp } from './listener';
+import { MainListener } from './listener';
 
 const KEY_TO_LISTEN = 'Alt';
 const HOLD_DURATION = 300; // in ms
@@ -25,15 +25,28 @@ type KeyboardWrapperProps = {
   customIndicator?: (l: string) => React.ReactNode;
 };
 
+/**
+ *
+ *
+ * @param {KeyboardWrapperProps} {
+ *   children,
+ *   label,
+ *   combination,
+ *   onDown,
+ *   customIndicator = _customChildNode,
+ * }
+ * @return {*}  {React.JSX.Element}
+ */
 const KeyboardWrapper = ({
   children,
   label,
   combination,
   onDown,
   customIndicator = _customChildNode,
-}: KeyboardWrapperProps) => {
+}: KeyboardWrapperProps): React.JSX.Element => {
   const [holded, setHolded] = useState(false);
-  const app = getApp();
+  const appInstance = MainListener.getInstance();
+  const app = appInstance.getApp();
 
   let lastKeyUpAt = new Date();
 

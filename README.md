@@ -13,32 +13,8 @@ This repository consists of my recreation of libraries that we have now. I used 
 This example explains how I had built keyboard shortcut feature without using any external library.
 ![](./example/assets/playback.gif)
 
-### Setup
-
-#### 1. You need to initialize `MainListener` in your root file.
-
-Make sure this is only executed ones. I will update later for singleton effect.
-
 ##### Code Example
-
-```javascript
-import { MainListener } from './utils/KeyboardShortcut'
-function App() {
-...
-  useEffect(()=>{
-    //Initialize the listener
-    new MainListener().initialize()
-  },[])
-  ...
-  return <>
-  ...your project here
-  </>
-}
-```
-
-#### 2. Import `KeyboardWrapper` and use it in the component where you want your shortcut to execute with required props
-
-##### Code Example
+Import `KeyboardWrapper` and use it in the component where you want your shortcut to execute with required props
 
 ```javascript
 import { KeyboardWrapper } from './utils/KeyboardShortcut'
@@ -57,23 +33,6 @@ return <div>
   </div>
 ```
 
-#### Note
-
-Make sure you are not running this in strict mode, else the listener might be initialized twice.
-
-Change From
-
-```javascript
-<React.StrictMode>
-    <App />
-</React.StrictMode>,
-```
-
-To
-
-```javascript
-<App />
-```
 
 ## 2. Object Difference
 

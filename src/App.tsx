@@ -1,16 +1,10 @@
-/* eslint-disable no-console */
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import './App.css';
 
-import { KeyboardWrapper, MainListener } from './utils/KeyboardShortcut';
+import { KeyboardWrapper } from './utils/KeyboardShortcut';
 
 function App() {
-  useEffect(() => {
-    // Initialize the listener
-    new MainListener().initialize();
-  }, []);
-
   return (
     <>
       <div className="button-list">
