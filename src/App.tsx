@@ -4,11 +4,6 @@ import React, { useEffect } from 'react';
 import './App.css';
 
 import { KeyboardWrapper, MainListener } from './utils/KeyboardShortcut';
-import {
-  calculateDeltaBaseObject,
-  convertBasicToNested,
-  convertNestedToBasic,
-} from './utils/objDelta';
 
 function App() {
   useEffect(() => {
@@ -16,51 +11,6 @@ function App() {
     new MainListener().initialize();
   }, []);
 
-  // eslint-disable-next-line no-console
-  console.log(
-    'convertBasicToNested',
-    JSON.stringify(
-      convertBasicToNested({
-        'profile.name': 'Prasidha Karki',
-        address: '2das',
-        'items[0].id': 1,
-        'items[0].product_id': 2,
-        'items[2].id': 1,
-        'items[2].product_id': 2,
-        'profile.address.municipality': 'Ganja',
-      })
-    )
-  );
-  // eslint-disable-next-line no-console
-  console.log(
-    'convertNestedToBasic',
-    convertNestedToBasic({
-      profile: { name: 'Prasidha Karki', address: { municipality: 'Ganja' } },
-      address: '2das',
-      items: [
-        { id: 1, product_id: 2 },
-        { id: 1, product_id: 2 },
-      ],
-    })
-  );
-
-  const oldObject = convertNestedToBasic({
-    profile: { name: 'Prasidha Karki', address: { municipality: 'Ganja' } },
-    address: '2das',
-    items: [{ id: 1, product_id: 2 }, null, { id: 1, product_id: 2 }],
-  });
-  const newObject = convertNestedToBasic({
-    profile: { name: 'Prasidha Karki', address: { municipality: 'Ganja2', ward: 2 } },
-    address: 'Name',
-    items: [
-      { id: 1, product_id: 2 },
-      { id: 1, product_id: 2 },
-    ],
-  });
-  console.log(
-    'calculateDeltaBaseObject',
-    convertBasicToNested(calculateDeltaBaseObject(oldObject, newObject))
-  );
   return (
     <>
       <div className="button-list">
